@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GEMINI_API_KEY = 'AIzaSyA96QHffl93JFQwOs2sMc8EsV4wBLOkTNs'       #os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 # You can switch models here centrally
