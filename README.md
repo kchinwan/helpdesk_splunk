@@ -39,21 +39,25 @@ splunk_ai_assistant/
 ├── assets/                     # Static assets like images.
 │   └── icon.png                # Application icon.
 
+
 Getting Started (High-Level)
 Clone the repository:
 
 git clone <repository_url>
 cd splunk_ai_assistant
 
+
 Install dependencies:
 
 pip install -r requirements.txt
+
 
 Set up your LLM (Gemini) API: Ensure your environment is configured to access the Gemini API for spl_generator.py and the LLM-driven parts of spl_refiner.py.
 
 Run the Streamlit application:
 
 streamlit run main.py
+
 
 This will launch the Splunk AI Assistant in your web browser.
 
