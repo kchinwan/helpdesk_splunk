@@ -1,0 +1,21 @@
+# Core Streamlit App
+streamlit==1.35.0
+
+# Gemini LLM integration via Google GenAI SDK
+google-generativeai==0.4.1
+
+# NLP and data handling
+pandas==2.2.2
+numpy==1.26.4
+
+# Optional: parsing JSON logs or nested schemas
+orjson==3.10.3
+
+# Prompt formatting and parsing
+tqdm==4.66.4
+markdown==3.6
+
+# Fast string matching / regex
+regex==2023.12.25
+
+
