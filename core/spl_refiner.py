@@ -2,6 +2,9 @@
 
 import re
 from core.spl_composer import build_spl_query
+from utils.helpers import get_gemini_response        
+from core.prompt_engine import build_refinement_prompt
+
 
 def extract_filters_from_spl(spl: str):
     """
@@ -19,25 +22,39 @@ def extract_filters_from_spl(spl: str):
 
     return index, field_filters
 
-def refine_spl_query(existing_spl: str, new_filters: dict) -> str:
+
+def refine_spl_query(existing_spl: str, extracted_entities: dict = None, refinement_prompt: str = None) -> str:
     """
-    Refines an existing SPL query by merging new filters intelligently.
+    Refines an existing SPL query either by:
+    - Merging new structured filters (if no prompt), or
+    - Using Gemini to apply a natural language refinement prompt.
 
     Args:
         existing_spl (str): The original SPL string.
-        new_filters (dict): Dictionary of new filters {field: [values]}.
+        extracted_entities (dict): Structured filters to merge (optional).
+        refinement_prompt (str): Natural language instruction for refinement (optional).
 
     Returns:
         str: Refined SPL query.
     """
+    if refinement_prompt:
+        # Use Gemini to refine the SPL based on natural language
+
+        prompt = build_refinement_prompt(existing_spl, refinement_prompt, extracted_entities)
+
+        response = get_gemini_response(prompt)
+        return response
+
+    # Fallback: merge structured filters
     index, existing_filters = extract_filters_from_spl(existing_spl)
 
-    # Merge new filters
-    for key, values in new_filters.items():
-        if key in existing_filters:
-            # Merge and deduplicate
-            existing_filters[key] = list(set(existing_filters[key] + values))
-        else:
-            existing_filters[key] = values
+    if extracted_entities:
+        for key, values in extracted_entities.items():
+            if not isinstance(values, list):
+                values = [values]
+            if key in existing_filters:
+                existing_filters[key] = list(set(existing_filters[key] + values))
+            else:
+                existing_filters[key] = values
 
     return build_spl_query(index=index, field_filters=existing_filters)
