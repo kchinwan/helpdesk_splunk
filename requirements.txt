@@ -18,4 +18,6 @@ markdown==3.6
 # Fast string matching / regex
 regex==2023.12.25
 
+dotenv
+
 
