@@ -1,3 +1,17 @@
+import sys
+import subprocess
+
+packages = [
+    "numpy",
+    "pandas",
+    "streamlit"
+     "google-generativeai"
+    "dotenv"
+]
+
+for package in packages:
+    print(f"Installing the latest version of {package}...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 import streamlit as st
 import uuid
 from core.spl_generator import generate_spl_query
